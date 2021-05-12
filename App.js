@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Header from './components/header';
 import CicadaItem from './components/cicadaitem'
+import AddCicada from './components/addCicada'
+import ImageUpload from './components/imageUpload'
 
 export default function App() {
 
@@ -12,12 +14,24 @@ export default function App() {
     { text: 'Cicada 4' , key: '4' },
   ]);
 
+  const submitHandler = (text) => {
+    setCicadas((prevCicadas) => {
+      return [
+        { text: text, key: Math.random().toString()},
+        ...prevCicadas
+      ]
+    })
+  }
+
   return (
     <View style={styles.container}>
       {/** header */}
       <Header />
       <View style={styles.content}>
         {/** cicada form */}
+        <ImageUpload /> 
+        <AddCicada submitHandler={submitHandler}/>
+        {/**cicada list */}
         <View style={styles.list}>
           <FlatList
             data={cicadas}
@@ -38,11 +52,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  
   },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
+  content: {
+    padding: 40,
+  },
+  list: {
+    marginTop: 20,
   },
 });
